@@ -14,12 +14,6 @@ public class httpGetEx {
 
 	public static void main(String[] args) {
 
-		// http 경로
-		String todo = "https://jsonplaceholder.typicode.com/todos/1";
-
-		// 옵션값
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
 		// 1. 남이 만들어준 서버에
 		// 2. 자바코드로 요청
 		// 3. 문자열 던져줌(json문자열)
@@ -40,6 +34,8 @@ public class httpGetEx {
 
 		// URL 클래스 만들기
 		try {
+			// http 경로
+			String todo = "https://jsonplaceholder.typicode.com/todos/1";
 			// 객체 생성
 			URL url = new URL(todo);
 			// 연결 요청
@@ -47,6 +43,7 @@ public class httpGetEx {
 
 			// Method(GET)
 			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-type", "application/json"); // 오타 주의
 
 			// HTTP 응답 메시지
 			int responseCode = conn.getResponseCode();
@@ -57,20 +54,28 @@ public class httpGetEx {
 
 			String inputLine;
 			StringBuffer responseBuffer = new StringBuffer(); // 보조 스트림
-
 			while ((inputLine = brIn.readLine()) != null) {
 				responseBuffer.append(inputLine);
 			}
 			brIn.close();
+			System.out.println(responseBuffer.toString());
+			System.out.println("----------------------------");
+			
+			// 옵션값
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			// 객체 --> json 형식의 문자열로 변환
-			String Str1 = gson.toJson(todo);
-			System.out.println(responseBuffer);
-			// while문이 돌면서 받은 데이터가 보조 스트림인 responseBuffer 여기에 담기기 때문.
+			
+			Todo todoDTO = gson.fromJson(responseBuffer.toString(), Todo.class);
+			
+			
+//			// 객체 --> json 형식의 문자열로 변환
+//			String Str1 = gson.toJson(todo);
+//			System.out.println(responseBuffer);
+//			// while문이 돌면서 받은 데이터가 보조 스트림인 responseBuffer 여기에 담기기 때문.
 
-			// 문자열 --> 객체(클래스)로 변환
-			String Str2 = gson.fromJson(Str1, todo.getClass());
-			System.out.println(Str2.toString());
+//			// 문자열 --> 객체(클래스)로 변환
+//			String Str2 = gson.fromJson(Str1, todo.getClass());
+//			System.out.println(Str2.toString());
 
 		} catch (IOException e) {
 			e.printStackTrace();
