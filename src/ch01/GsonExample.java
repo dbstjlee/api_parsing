@@ -34,7 +34,7 @@ public class GsonExample {
 		Student studentObject = gson.fromJson(student1Str, Student.class);
 		// student1Str 이 문자열을 어떻게 파싱할지
 		// Student.class -> 클래스 명을 명시(최상의 클래스 Object에 있음)
-		System.err.println(studentObject.getName());
+		System.err.println(studentObject.getName()); // 고길동 출력
 
 		// 배열 형태로 변환
 		Student[] StringArr = gson.fromJson(gson.toJson(studentArr), Student[].class);

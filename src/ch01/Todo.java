@@ -20,11 +20,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+
 public class Todo {
 
 	private int userId;
 	private int id;
 	private String title;
 	private boolean completed;
-	
 }

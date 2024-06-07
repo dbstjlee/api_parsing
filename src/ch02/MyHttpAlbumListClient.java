@@ -35,7 +35,7 @@ public class MyHttpAlbumListClient {
 			conn.setRequestMethod("GET");
 			// RequestProperty : Request Header 값 세팅(String key, String value)
 			// 타입 설정(application/json) 형식으로 전송 (Request body 전달 시 application/json로 서버에 전달 
-			conn.setRequestProperty("Content-type", "application/json"); // 오타 주의
+			conn.setRequestProperty("Content-type", "application/json");
 
 			// TCPip 기반의 통신 = 신뢰성 있는 통신(요청 -> 반드시 응답)
 			// UDP 응답 안 올 수 있음(빠름)
@@ -75,21 +75,26 @@ public class MyHttpAlbumListClient {
 
 			// JSON 배열 형태를 쉽게 파싱하는 방법 -> TypeToken 안에 List<T> 을 활용한다.
 			Type albumType = new TypeToken<List<Album>>() {}.getType(); 
+			// TypeToken 클래스를 이용해서 Lis<Album>형식의 객체를 내부적으로 만들고
+			// 만들어진 List<Album> 데이터 타입을 getType() 메서드로 얻어온다. 
 			// .getType() : TypeToken을 반환한다.
-
+			// TypeToken 클래스는 추상클래스로 객체를 생성할 수 없어 {} 구현함.(익명 클래스)
+			// => JSON 형태의 배열 데이터를 Java 객체로 받을 때 사용하는 코드 
+			
 			List<Album> albumList = gson.fromJson(buffer.toString(), albumType);
-			// buffer.toString() : 배열로 감싸져 있는 문자를 파싱
+			// buffer.toString() : '배열로 감싸져 있는 문자'(파싱 대상)
+			// => buffer.toString()를 albumType 객체로 변환(문자 -> 객체)
 
 			System.out.println(albumList.size());
 			for (Album a : albumList) {
 				System.out.println(a.toString());
 			}
+			// album이라는 Object를 100개 받음. 하나 하나 반복해서 출력함.
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// album이라는 Object를 100개 받음. 하나 하나 반복해서 출력함.
 
 	}// end of main
 

@@ -58,24 +58,24 @@ public class httpGetEx {
 				responseBuffer.append(inputLine);
 			}
 			brIn.close();
+
+			// 객체 -> JSON 형식의 문자열
 			System.out.println(responseBuffer.toString());
+			// String Str1 = gson.toJson(todo);
+			// System.out.println(responseBuffer);
+			// while문이 돌면서 받은 데이터가 보조 스트림인 responseBuffer 여기에 담기기 때문.
 			System.out.println("----------------------------");
-			
+
 			// 옵션값
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-			
+			// 문자열 -> 객체
 			Todo todoDTO = gson.fromJson(responseBuffer.toString(), Todo.class);
-			
-			
-//			// 객체 --> json 형식의 문자열로 변환
-//			String Str1 = gson.toJson(todo);
-//			System.out.println(responseBuffer);
-//			// while문이 돌면서 받은 데이터가 보조 스트림인 responseBuffer 여기에 담기기 때문.
 
-//			// 문자열 --> 객체(클래스)로 변환
-//			String Str2 = gson.fromJson(Str1, todo.getClass());
-//			System.out.println(Str2.toString());
+			System.out.println(todoDTO.getUserId());
+			System.out.println(todoDTO.getId());
+			System.out.println(todoDTO.getTitle());
+			System.out.println(todoDTO.isCompleted());
 
 		} catch (IOException e) {
 			e.printStackTrace();
